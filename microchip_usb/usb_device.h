@@ -44,7 +44,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define _USB_DEVICE_H
 //DOM-IGNORE-END
 
-#include <usb/usb_common.h>
+#include <usb_common.h>
 #include <stdint.h>
 
 
@@ -1908,6 +1908,6 @@ extern USB_VOLATILE uint8_t USBActiveConfiguration;
 /******************************************************************************/
 /* DOM-IGNORE-END */
 
-#include <usb/usb_hal.h>
+#include "usb_hal.h"
 
 #endif //USB_DEVICE_H

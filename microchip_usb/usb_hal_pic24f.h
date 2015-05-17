@@ -30,12 +30,12 @@ CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
 /****** include files ********************************************************/
 /*****************************************************************************/
 
-#include "system.h"
-#include "system_config.h"
+#include <system.h>
+#include <../system_config.h>
 
 #include <stdint.h>
 #include <string.h>
-#include <usb/usb_common.h>
+#include <usb_common.h>
 
 /*****************************************************************************/
 /****** Constant definitions *************************************************/

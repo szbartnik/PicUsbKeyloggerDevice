@@ -33,22 +33,8 @@ CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
 // *****************************************************************************
 #include <stdint.h>
 
-#if defined(__18CXX) || defined(__XC8)
-    #if defined(_PIC14E)
-        #include "usb/usb_hal_pic16f1.h"
-    #else
-        #include "usb/usb_hal_pic18.h"
-    #endif
-#elif defined(__C30__) || defined __XC16__
-	#if defined(__dsPIC33E__) 
-            #include <usb/usb_hal_dspic33e.h>
-	#elif defined(__PIC24E__)
-            #include <usb/usb_hal_pic24e.h>
-	#else
-            #include <usb/usb_hal_pic24f.h>
-	#endif
-#elif defined(__PIC32MX__)
-    #include "usb/usb_hal_pic32.h"
+#if defined(__C30__) || defined __XC16__
+    #include <usb_hal_pic24f.h>
 #else
     #error "Silicon Platform not defined"
 #endif

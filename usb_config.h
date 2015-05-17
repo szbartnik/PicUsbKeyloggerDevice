@@ -27,7 +27,7 @@
 #ifndef USBCFG_H
 #define USBCFG_H
 
-#include "usb/usb_ch9.h"
+#include "microchip_usb/usb_ch9.h"
 
 /** DEFINITIONS ****************************************************/
 #define USB_EP0_BUFF_SIZE		8	// Valid Options: 8, 16, 32, or 64 bytes.

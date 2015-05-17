@@ -21,9 +21,15 @@ Command:
   -Lc:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../support/dsPIC33E/gld \
   -Lc:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib/dsPIC33F \
   -Lc:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../support/dsPIC33F/gld \
-  build/default/production/main.o \
+  build/default/production/microchip_usb/usb_device.o \
+  build/default/production/microchip_usb/usb_device_hid.o \
+  build/default/production/system_config/buttons.o \
+  build/default/production/system_config/leds.o \
+  build/default/production/system_config/system.o \
+  build/default/production/system_config/timer_1ms.o \
   build/default/production/app_device_keyboard.o \
   build/default/production/app_led_usb_status.o \
+  build/default/production/main.o \
   build/default/production/usb_descriptors.o \
   --defsym=__MPLAB_BUILD=1 \
   -Tp24FJ64GB002.gld.00 \
@@ -53,7 +59,7 @@ c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libpic30-elf.a(crt
 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
                               c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o) (__data_init_standard)
 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libc-elf.a(memset.eo)
-                              build/default/production/app_device_keyboard.o (_memset)
+                              build/default/production/microchip_usb/usb_device.o (_memset)
 
 
 Program Memory  [Origin = 0x200, Length = 0xa9f8]
@@ -62,19 +68,20 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200                0xb0           0x108  (264)
 .const                       0x2b0                0xd8           0x144  (324)
-.text                        0x388               0x32c           0x4c2  (1218)
-.dinit                       0x6b4                0x14            0x1e  (30)
+.text                        0x388              0x18ee          0x2565  (9573)
+.dinit                      0x1c76                0x2c            0x42  (66)
 
-                     Total program memory used (bytes):          0x72c  (1836) 2%
+                     Total program memory used (bytes):         0x27f3  (10227) 15%
 
 
 Data Memory  [Origin = 0x800, Length = 0x2000]
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
-.nbss                        0x800                   0            0x22  (34)
+_045847205558a276            0x800                   0            0x20  (32)
+.nbss                        0x820                   0            0x70  (112)
 
-                        Total data memory used (bytes):           0x22  (34) <1%
+                        Total data memory used (bytes):           0x90  (144) 1%
 
 
 Dynamic Memory Usage
@@ -82,31 +89,89 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0x822                              0x1fde  (8158)
+stack                        0x890                              0x1f70  (8048)
 
-                        Maximum dynamic memory (bytes):         0x1fde  (8158)
+                        Maximum dynamic memory (bytes):         0x1f70  (8048)
 
 
 External Symbols in Data Memory (by address):
 
-                    0x0810                  _oldInputReport
-                    0x0818                  _keyboardIdleRate
-                    0x081a                  _LocalSOFCount
-                    0x081e                  _SOFCounter
+                    0x0800                  _BDT
+                    0x0820                  _USBDeviceState
+                    0x0822                  _USBActiveConfiguration
+                    0x0823                  _USBAlternateInterface
+                    0x0824                  _pBDTEntryEP0OutCurrent
+                    0x0826                  _pBDTEntryEP0OutNext
+                    0x0828                  _pBDTEntryOut
+                    0x082c                  _pBDTEntryIn
+                    0x0830                  _shortPacketStatus
+                    0x0831                  _controlTransferState
+                    0x0832                  _inPipes
+                    0x0838                  _outPipes
+                    0x0840                  _pDst
+                    0x0842                  _RemoteWakeup
+                    0x0843                  _USBBusIsSuspended
+                    0x0844                  _USTATcopy
+                    0x0845                  _endpoint_number
+                    0x0846                  _BothEP0OutUOWNsSet
+                    0x0847                  _ep_data_in
+                    0x0849                  _ep_data_out
+                    0x084b                  _USBStatusStageTimeoutCounter
+                    0x084c                  _USBDeferStatusStagePacket
+                    0x084d                  _USBStatusStageEnabledFlag1
+                    0x084e                  _USBStatusStageEnabledFlag2
+                    0x084f                  _USBDeferINDataStagePackets
+                    0x0850                  _USBDeferOUTDataStagePackets
+                    0x0851                  _SetupPkt
+                    0x0859                  _CtrlTrfData
+                    0x0872                  _oldInputReport
+                    0x087a                  _keyboardIdleRate
+                    0x087c                  _LocalSOFCount
+                    0x0880                  _requests
+                    0x088e                  _SOFCounter
 
 External Symbols in Data Memory (by name):
 
-                    0x081a                  _LocalSOFCount
-                    0x081e                  _SOFCounter
-                    0x0818                  _keyboardIdleRate
-                    0x0810                  _oldInputReport
+                    0x0800                  _BDT
+                    0x0846                  _BothEP0OutUOWNsSet
+                    0x0859                  _CtrlTrfData
+                    0x087c                  _LocalSOFCount
+                    0x0842                  _RemoteWakeup
+                    0x088e                  _SOFCounter
+                    0x0851                  _SetupPkt
+                    0x0822                  _USBActiveConfiguration
+                    0x0823                  _USBAlternateInterface
+                    0x0843                  _USBBusIsSuspended
+                    0x084f                  _USBDeferINDataStagePackets
+                    0x0850                  _USBDeferOUTDataStagePackets
+                    0x084c                  _USBDeferStatusStagePacket
+                    0x0820                  _USBDeviceState
+                    0x084d                  _USBStatusStageEnabledFlag1
+                    0x084e                  _USBStatusStageEnabledFlag2
+                    0x084b                  _USBStatusStageTimeoutCounter
+                    0x0844                  _USTATcopy
+                    0x0831                  _controlTransferState
+                    0x0845                  _endpoint_number
+                    0x0847                  _ep_data_in
+                    0x0849                  _ep_data_out
+                    0x0832                  _inPipes
+                    0x087a                  _keyboardIdleRate
+                    0x0872                  _oldInputReport
+                    0x0838                  _outPipes
+                    0x0824                  _pBDTEntryEP0OutCurrent
+                    0x0826                  _pBDTEntryEP0OutNext
+                    0x082c                  _pBDTEntryIn
+                    0x0828                  _pBDTEntryOut
+                    0x0840                  _pDst
+                    0x0880                  _requests
+                    0x0830                  _shortPacketStatus
 
 External Symbols in Program Memory (by address):
 
                   0x000200                  __resetPRI
                   0x00022c                  __psv_init
-                  0x00023c                  __data_init_standard
                   0x00023c                  __data_init
+                  0x00023c                  __data_init_standard
                   0x00029e                  __DefaultInterrupt
                   0x0002a2                  _memset
                   0x0002b0                  _device_dsc
@@ -117,26 +182,74 @@ External Symbols in Program Memory (by address):
                   0x000340                  _USB_CD_Ptr
                   0x000342                  _USB_SD_Ptr
                   0x000348                  _hid_rpt01
-                  0x000388                  _APP_KeyboardInit
-                  0x0003c8                  _APP_KeyboardTasks
-                  0x000510                  build/default/production/app_device_keyboard.o:_USBHIDCBSetReportComplete
-                  0x000522                  _USBHIDCBSetReportHandler
-                  0x00058c                  _USBHIDCBSetIdleRateHandler
-                  0x0005a2                  _main
-                  0x0005c8                  _USER_USB_CALLBACK_EVENT_HANDLER
-                  0x00063c                  _APP_LEDUpdateUSBStatus
+                  0x000388                  _USBDeviceInit
+                  0x0004ba                  _USBDeviceTasks
+                  0x000654                  _USBEnableEndpoint
+                  0x00068e                  _USBTransferOnePacket
+                  0x000736                  _USBStallEndpoint
+                  0x0007d4                  _USBCancelIO
+                  0x00089c                  _USBDeviceDetach
+                  0x0008ae                  _USBDeviceAttach
+                  0x0008e6                  _USBCtrlEPAllowStatusStage
+                  0x00097a                  _USBCtrlEPAllowDataStage
+                  0x0014be                  _APP_KeyboardInit
+                  0x0014fe                  _APP_KeyboardTasks
+                  0x001646                  build/default/production/app_device_keyboard.o:_USBHIDCBSetReportComplete
+                  0x001658                  _USBHIDCBSetReportHandler
+                  0x0016c2                  _USBHIDCBSetIdleRateHandler
+                  0x0016d8                  _TIMER_CancelTick
+                  0x001712                  _TIMER_RequestTick
+                  0x001778                  _TIMER_SetConfiguration
+                  0x0017e6                  __T3Interrupt
+                  0x00188e                  _USBCheckHIDRequest
+                  0x0019a2                  _LED_On
+                  0x0019c4                  _LED_Off
+                  0x0019e6                  _LED_Toggle
+                  0x001a38                  _LED_Get
+                  0x001a7c                  _LED_Enable
+                  0x001a9e                  _main
+                  0x001ac4                  _USER_USB_CALLBACK_EVENT_HANDLER
+                  0x001b38                  _APP_LEDUpdateUSBStatus
+                  0x001bb0                  _SYSTEM_Initialize
+                  0x001bf0                  __USB1Interrupt
+                  0x001c14                  _BUTTON_IsPressed
+                  0x001c54                  _BUTTON_Enable
 
 External Symbols in Program Memory (by name):
 
-                  0x000388                  _APP_KeyboardInit
-                  0x0003c8                  _APP_KeyboardTasks
-                  0x00063c                  _APP_LEDUpdateUSBStatus
-                  0x00058c                  _USBHIDCBSetIdleRateHandler
-                  0x000522                  _USBHIDCBSetReportHandler
+                  0x0014be                  _APP_KeyboardInit
+                  0x0014fe                  _APP_KeyboardTasks
+                  0x001b38                  _APP_LEDUpdateUSBStatus
+                  0x001c54                  _BUTTON_Enable
+                  0x001c14                  _BUTTON_IsPressed
+                  0x001a7c                  _LED_Enable
+                  0x001a38                  _LED_Get
+                  0x0019c4                  _LED_Off
+                  0x0019a2                  _LED_On
+                  0x0019e6                  _LED_Toggle
+                  0x001bb0                  _SYSTEM_Initialize
+                  0x0016d8                  _TIMER_CancelTick
+                  0x001712                  _TIMER_RequestTick
+                  0x001778                  _TIMER_SetConfiguration
+                  0x0007d4                  _USBCancelIO
+                  0x00188e                  _USBCheckHIDRequest
+                  0x00097a                  _USBCtrlEPAllowDataStage
+                  0x0008e6                  _USBCtrlEPAllowStatusStage
+                  0x0008ae                  _USBDeviceAttach
+                  0x00089c                  _USBDeviceDetach
+                  0x000388                  _USBDeviceInit
+                  0x0004ba                  _USBDeviceTasks
+                  0x000654                  _USBEnableEndpoint
+                  0x0016c2                  _USBHIDCBSetIdleRateHandler
+                  0x001658                  _USBHIDCBSetReportHandler
+                  0x000736                  _USBStallEndpoint
+                  0x00068e                  _USBTransferOnePacket
                   0x000340                  _USB_CD_Ptr
                   0x000342                  _USB_SD_Ptr
-                  0x0005c8                  _USER_USB_CALLBACK_EVENT_HANDLER
+                  0x001ac4                  _USER_USB_CALLBACK_EVENT_HANDLER
                   0x00029e                  __DefaultInterrupt
+                  0x0017e6                  __T3Interrupt
+                  0x001bf0                  __USB1Interrupt
                   0x00023c                  __data_init
                   0x00023c                  __data_init_standard
                   0x00022c                  __psv_init
@@ -144,12 +257,12 @@ External Symbols in Program Memory (by name):
                   0x0002c2                  _configDescriptor1
                   0x0002b0                  _device_dsc
                   0x000348                  _hid_rpt01
-                  0x0005a2                  _main
+                  0x001a9e                  _main
                   0x0002a2                  _memset
                   0x0002ec                  _sd000
                   0x0002f0                  _sd001
                   0x000324                  _sd002
-                  0x000510                  build/default/production/app_device_keyboard.o:_USBHIDCBSetReportComplete
+                  0x001646                  build/default/production/app_device_keyboard.o:_USBHIDCBSetReportComplete
 
 Memory Configuration
 
@@ -168,9 +281,15 @@ CONFIG1          0x00abfe           0x000002
 
 Linker script and memory map
 
-LOAD build/default/production/main.o
+LOAD build/default/production/microchip_usb/usb_device.o
+LOAD build/default/production/microchip_usb/usb_device_hid.o
+LOAD build/default/production/system_config/buttons.o
+LOAD build/default/production/system_config/leds.o
+LOAD build/default/production/system_config/system.o
+LOAD build/default/production/system_config/timer_1ms.o
 LOAD build/default/production/app_device_keyboard.o
 LOAD build/default/production/app_led_usb_status.o
+LOAD build/default/production/main.o
 LOAD build/default/production/usb_descriptors.o
                     0x0001                  __MPLAB_BUILD = 0x1
 LOAD c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib/PIC24F\libpPIC24Fxxx-elf.a
@@ -232,40 +351,70 @@ __CONFIG1
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x2056
+.debug_info       0x000000       0x696e
  *(.debug_info)
- .debug_info      0x000000        0x7a2 build/default/production/main.o
- .debug_info      0x0007a2        0xd62 build/default/production/app_device_keyboard.o
- .debug_info      0x001504        0x374 build/default/production/app_led_usb_status.o
- .debug_info      0x001878        0x7de build/default/production/usb_descriptors.o
+ .debug_info      0x000000       0x26f3 build/default/production/microchip_usb/usb_device.o
+ .debug_info      0x0026f3        0xc52 build/default/production/microchip_usb/usb_device_hid.o
+ .debug_info      0x003345        0x2be build/default/production/system_config/buttons.o
+ .debug_info      0x003603        0x4a0 build/default/production/system_config/leds.o
+ .debug_info      0x003aa3        0x42b build/default/production/system_config/system.o
+ .debug_info      0x003ece        0xa4a build/default/production/system_config/timer_1ms.o
+ .debug_info      0x004918        0xd62 build/default/production/app_device_keyboard.o
+ .debug_info      0x00567a        0x374 build/default/production/app_led_usb_status.o
+ .debug_info      0x0059ee        0x7a2 build/default/production/main.o
+ .debug_info      0x006190        0x7de build/default/production/usb_descriptors.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x4ab
+.debug_abbrev     0x000000        0xd15
  *(.debug_abbrev)
- .debug_abbrev    0x000000        0x11d build/default/production/main.o
- .debug_abbrev    0x00011d        0x1d1 build/default/production/app_device_keyboard.o
- .debug_abbrev    0x0002ee         0xdb build/default/production/app_led_usb_status.o
- .debug_abbrev    0x0003c9         0xe2 build/default/production/usb_descriptors.o
+ .debug_abbrev    0x000000        0x2bc build/default/production/microchip_usb/usb_device.o
+ .debug_abbrev    0x0002bc        0x15e build/default/production/microchip_usb/usb_device_hid.o
+ .debug_abbrev    0x00041a         0xca build/default/production/system_config/buttons.o
+ .debug_abbrev    0x0004e4         0xca build/default/production/system_config/leds.o
+ .debug_abbrev    0x0005ae        0x106 build/default/production/system_config/system.o
+ .debug_abbrev    0x0006b4        0x1b6 build/default/production/system_config/timer_1ms.o
+ .debug_abbrev    0x00086a        0x1d1 build/default/production/app_device_keyboard.o
+ .debug_abbrev    0x000a3b         0xdb build/default/production/app_led_usb_status.o
+ .debug_abbrev    0x000b16        0x11d build/default/production/main.o
+ .debug_abbrev    0x000c33         0xe2 build/default/production/usb_descriptors.o
 
-.debug_line       0x000000        0x89d
+.debug_line       0x000000       0x2530
  *(.debug_line)
- .debug_line      0x000000        0x264 build/default/production/main.o
- .debug_line      0x000264        0x33e build/default/production/app_device_keyboard.o
- .debug_line      0x0005a2        0x1fb build/default/production/app_led_usb_status.o
- .debug_line      0x00079d        0x100 build/default/production/usb_descriptors.o
+ .debug_line      0x000000       0x133c build/default/production/microchip_usb/usb_device.o
+ .debug_line      0x00133c        0x220 build/default/production/microchip_usb/usb_device_hid.o
+ .debug_line      0x00155c        0x135 build/default/production/system_config/buttons.o
+ .debug_line      0x001691        0x20d build/default/production/system_config/leds.o
+ .debug_line      0x00189e        0x14a build/default/production/system_config/system.o
+ .debug_line      0x0019e8        0x2a3 build/default/production/system_config/timer_1ms.o
+ .debug_line      0x001c8b        0x344 build/default/production/app_device_keyboard.o
+ .debug_line      0x001fcf        0x201 build/default/production/app_led_usb_status.o
+ .debug_line      0x0021d0        0x26a build/default/production/main.o
+ .debug_line      0x00243a         0xf6 build/default/production/usb_descriptors.o
 
-.debug_frame      0x000000         0xcc
+.debug_frame      0x000000        0x3c4
  *(.debug_frame)
- .debug_frame     0x000000         0x34 build/default/production/main.o
- .debug_frame     0x000034         0x74 build/default/production/app_device_keyboard.o
- .debug_frame     0x0000a8         0x24 build/default/production/app_led_usb_status.o
+ .debug_frame     0x000000        0x1b4 build/default/production/microchip_usb/usb_device.o
+ .debug_frame     0x0001b4         0x24 build/default/production/microchip_usb/usb_device_hid.o
+ .debug_frame     0x0001d8         0x34 build/default/production/system_config/buttons.o
+ .debug_frame     0x00020c         0x64 build/default/production/system_config/leds.o
+ .debug_frame     0x000270         0x34 build/default/production/system_config/system.o
+ .debug_frame     0x0002a4         0x54 build/default/production/system_config/timer_1ms.o
+ .debug_frame     0x0002f8         0x74 build/default/production/app_device_keyboard.o
+ .debug_frame     0x00036c         0x24 build/default/production/app_led_usb_status.o
+ .debug_frame     0x000390         0x34 build/default/production/main.o
 
-.debug_str        0x000000         0xb7
+.debug_str        0x000000        0x3ed
  *(.debug_str)
- .debug_str       0x000000         0x25 build/default/production/main.o
- .debug_str       0x000025         0x4e build/default/production/app_device_keyboard.o
- .debug_str       0x000073         0x1a build/default/production/app_led_usb_status.o
- .debug_str       0x00008d         0x2a build/default/production/usb_descriptors.o
+ .debug_str       0x000000        0x286 build/default/production/microchip_usb/usb_device.o
+ .debug_str       0x000286         0x4a build/default/production/microchip_usb/usb_device_hid.o
+ .debug_str       0x0002d0         0x14 build/default/production/system_config/buttons.o
+ .debug_str       0x0002e4         0x13 build/default/production/system_config/leds.o
+ .debug_str       0x0002f7          0xb build/default/production/system_config/system.o
+ .debug_str       0x000302         0x34 build/default/production/system_config/timer_1ms.o
+ .debug_str       0x000336         0x4e build/default/production/app_device_keyboard.o
+ .debug_str       0x000384         0x1a build/default/production/app_led_usb_status.o
+ .debug_str       0x00039e         0x25 build/default/production/main.o
+ .debug_str       0x0003c3         0x2a build/default/production/usb_descriptors.o
 
 .debug_loc
  *(.debug_loc)
@@ -274,28 +423,52 @@ __CONFIG1
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x1af
+                  0x000000        0x64f
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000         0x4e build/default/production/main.o
+                  0x000000        0x33a build/default/production/microchip_usb/usb_device.o
  .debug_pubnames
-                  0x00004e         0xc1 build/default/production/app_device_keyboard.o
+                  0x00033a         0x29 build/default/production/microchip_usb/usb_device_hid.o
  .debug_pubnames
-                  0x00010f         0x2d build/default/production/app_led_usb_status.o
+                  0x000363         0x39 build/default/production/system_config/buttons.o
  .debug_pubnames
-                  0x00013c         0x73 build/default/production/usb_descriptors.o
+                  0x00039c         0x53 build/default/production/system_config/leds.o
+ .debug_pubnames
+                  0x0003ef         0x3b build/default/production/system_config/system.o
+ .debug_pubnames
+                  0x00042a         0x76 build/default/production/system_config/timer_1ms.o
+ .debug_pubnames
+                  0x0004a0         0xc1 build/default/production/app_device_keyboard.o
+ .debug_pubnames
+                  0x000561         0x2d build/default/production/app_led_usb_status.o
+ .debug_pubnames
+                  0x00058e         0x4e build/default/production/main.o
+ .debug_pubnames
+                  0x0005dc         0x73 build/default/production/usb_descriptors.o
 
 .debug_ranges
  *(.debug_ranges)
 
-.debug_aranges    0x000000         0x48
+.debug_aranges    0x000000         0xd8
  *(.debug_aranges)
  .debug_aranges
-                  0x000000         0x18 build/default/production/main.o
+                  0x000000         0x18 build/default/production/microchip_usb/usb_device.o
  .debug_aranges
-                  0x000018         0x18 build/default/production/app_device_keyboard.o
+                  0x000018         0x18 build/default/production/microchip_usb/usb_device_hid.o
  .debug_aranges
-                  0x000030         0x18 build/default/production/app_led_usb_status.o
+                  0x000030         0x18 build/default/production/system_config/buttons.o
+ .debug_aranges
+                  0x000048         0x18 build/default/production/system_config/leds.o
+ .debug_aranges
+                  0x000060         0x18 build/default/production/system_config/system.o
+ .debug_aranges
+                  0x000078         0x18 build/default/production/system_config/timer_1ms.o
+ .debug_aranges
+                  0x000090         0x18 build/default/production/app_device_keyboard.o
+ .debug_aranges
+                  0x0000a8         0x18 build/default/production/app_led_usb_status.o
+ .debug_aranges
+                  0x0000c0         0x18 build/default/production/main.o
 
 .ivt              0x000004         0xfc
                   0x000004          0x4 LONG 0x29e DEFINED (__ReservedTrap0)?ABSOLUTE (__ReservedTrap0):ABSOLUTE (__DefaultInterrupt)
@@ -314,7 +487,7 @@ __CONFIG1
                   0x00001e          0x4 LONG 0x29e DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000020          0x4 LONG 0x29e DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000022          0x4 LONG 0x29e DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000024          0x4 LONG 0x29e DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000024          0x4 LONG 0x17e6 DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000026          0x4 LONG 0x29e DEFINED (__SPI1ErrInterrupt)?ABSOLUTE (__SPI1ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000028          0x4 LONG 0x29e DEFINED (__SPI1Interrupt)?ABSOLUTE (__SPI1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00002a          0x4 LONG 0x29e DEFINED (__U1RXInterrupt)?ABSOLUTE (__U1RXInterrupt):ABSOLUTE (__DefaultInterrupt)
@@ -392,7 +565,7 @@ __CONFIG1
                   0x0000ba          0x4 LONG 0x29e DEFINED (__Interrupt83)?ABSOLUTE (__Interrupt83):ABSOLUTE (__DefaultInterrupt)
                   0x0000bc          0x4 LONG 0x29e DEFINED (__Interrupt84)?ABSOLUTE (__Interrupt84):ABSOLUTE (__DefaultInterrupt)
                   0x0000be          0x4 LONG 0x29e DEFINED (__Interrupt85)?ABSOLUTE (__Interrupt85):ABSOLUTE (__DefaultInterrupt)
-                  0x0000c0          0x4 LONG 0x29e DEFINED (__USB1Interrupt)?ABSOLUTE (__USB1Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x0000c0          0x4 LONG 0x1bf0 DEFINED (__USB1Interrupt)?ABSOLUTE (__USB1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x0000c2          0x4 LONG 0x29e DEFINED (__Interrupt87)?ABSOLUTE (__Interrupt87):ABSOLUTE (__DefaultInterrupt)
                   0x0000c4          0x4 LONG 0x29e DEFINED (__Interrupt88)?ABSOLUTE (__Interrupt88):ABSOLUTE (__DefaultInterrupt)
                   0x0000c6          0x4 LONG 0x29e DEFINED (__Interrupt89)?ABSOLUTE (__Interrupt89):ABSOLUTE (__DefaultInterrupt)
@@ -442,7 +615,7 @@ __CONFIG1
                   0x00011e          0x4 LONG 0x29e DEFINED (__AltIC2Interrupt)?ABSOLUTE (__AltIC2Interrupt):DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000120          0x4 LONG 0x29e DEFINED (__AltOC2Interrupt)?ABSOLUTE (__AltOC2Interrupt):DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000122          0x4 LONG 0x29e DEFINED (__AltT2Interrupt)?ABSOLUTE (__AltT2Interrupt):DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000124          0x4 LONG 0x29e DEFINED (__AltT3Interrupt)?ABSOLUTE (__AltT3Interrupt):DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000124          0x4 LONG 0x17e6 DEFINED (__AltT3Interrupt)?ABSOLUTE (__AltT3Interrupt):DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000126          0x4 LONG 0x29e DEFINED (__AltSPI1ErrInterrupt)?ABSOLUTE (__AltSPI1ErrInterrupt):DEFINED (__SPI1ErrInterrupt)?ABSOLUTE (__SPI1ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000128          0x4 LONG 0x29e DEFINED (__AltSPI1Interrupt)?ABSOLUTE (__AltSPI1Interrupt):DEFINED (__SPI1Interrupt)?ABSOLUTE (__SPI1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00012a          0x4 LONG 0x29e DEFINED (__AltU1RXInterrupt)?ABSOLUTE (__AltU1RXInterrupt):DEFINED (__U1RXInterrupt)?ABSOLUTE (__U1RXInterrupt):ABSOLUTE (__DefaultInterrupt)
@@ -520,7 +693,7 @@ __CONFIG1
                   0x0001ba          0x4 LONG 0x29e DEFINED (__AltInterrupt83)?ABSOLUTE (__AltInterrupt83):DEFINED (__Interrupt83)?ABSOLUTE (__Interrupt83):ABSOLUTE (__DefaultInterrupt)
                   0x0001bc          0x4 LONG 0x29e DEFINED (__AltInterrupt84)?ABSOLUTE (__AltInterrupt84):DEFINED (__Interrupt84)?ABSOLUTE (__Interrupt84):ABSOLUTE (__DefaultInterrupt)
                   0x0001be          0x4 LONG 0x29e DEFINED (__AltInterrupt85)?ABSOLUTE (__AltInterrupt85):DEFINED (__Interrupt85)?ABSOLUTE (__Interrupt85):ABSOLUTE (__DefaultInterrupt)
-                  0x0001c0          0x4 LONG 0x29e DEFINED (__AltUSB1Interrupt)?ABSOLUTE (__AltUSB1Interrupt):DEFINED (__USB1Interrupt)?ABSOLUTE (__USB1Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x0001c0          0x4 LONG 0x1bf0 DEFINED (__AltUSB1Interrupt)?ABSOLUTE (__AltUSB1Interrupt):DEFINED (__USB1Interrupt)?ABSOLUTE (__USB1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x0001c2          0x4 LONG 0x29e DEFINED (__AltInterrupt87)?ABSOLUTE (__AltInterrupt87):DEFINED (__Interrupt87)?ABSOLUTE (__Interrupt87):ABSOLUTE (__DefaultInterrupt)
                   0x0001c4          0x4 LONG 0x29e DEFINED (__AltInterrupt88)?ABSOLUTE (__AltInterrupt88):DEFINED (__Interrupt88)?ABSOLUTE (__Interrupt88):ABSOLUTE (__DefaultInterrupt)
                   0x0001c6          0x4 LONG 0x29e DEFINED (__AltInterrupt89)?ABSOLUTE (__AltInterrupt89):DEFINED (__Interrupt89)?ABSOLUTE (__Interrupt89):ABSOLUTE (__DefaultInterrupt)
@@ -1382,41 +1555,117 @@ LOAD default_isr
 LOAD data_init
 
 .debug_pubtypes
-                  0x000048        0x1e1
+                  0x0000d8        0x6ab
  .debug_pubtypes
-                  0x000048         0x63 build/default/production/main.o
+                  0x0000d8        0x269 build/default/production/microchip_usb/usb_device.o
  .debug_pubtypes
-                  0x0000ab         0xc9 build/default/production/app_device_keyboard.o
+                  0x000341         0x92 build/default/production/microchip_usb/usb_device_hid.o
  .debug_pubtypes
-                  0x000174         0x55 build/default/production/app_led_usb_status.o
+                  0x0003d3         0x5b build/default/production/system_config/buttons.o
  .debug_pubtypes
-                  0x0001c9         0x60 build/default/production/usb_descriptors.o
+                  0x00042e         0x56 build/default/production/system_config/leds.o
+ .debug_pubtypes
+                  0x000484         0x44 build/default/production/system_config/system.o
+ .debug_pubtypes
+                  0x0004c8         0xda build/default/production/system_config/timer_1ms.o
+ .debug_pubtypes
+                  0x0005a2         0xc9 build/default/production/app_device_keyboard.o
+ .debug_pubtypes
+                  0x00066b         0x55 build/default/production/app_led_usb_status.o
+ .debug_pubtypes
+                  0x0006c0         0x63 build/default/production/main.o
+ .debug_pubtypes
+                  0x000723         0x60 build/default/production/usb_descriptors.o
 
 __c30_signature
-                  0x000229         0x2a
+                  0x000783         0x4e
  __c30_signature
-                  0x000229          0x6 build/default/production/main.o
+                  0x000783          0x6 build/default/production/microchip_usb/usb_device.o
  __c30_signature
-                  0x00022f          0x6 build/default/production/app_device_keyboard.o
+                  0x000789          0x6 build/default/production/microchip_usb/usb_device_hid.o
  __c30_signature
-                  0x000235          0x6 build/default/production/app_led_usb_status.o
+                  0x00078f          0x6 build/default/production/system_config/buttons.o
  __c30_signature
-                  0x00023b          0x6 build/default/production/usb_descriptors.o
+                  0x000795          0x6 build/default/production/system_config/leds.o
  __c30_signature
-                  0x000241          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
+                  0x00079b          0x6 build/default/production/system_config/system.o
  __c30_signature
-                  0x000247          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
+                  0x0007a1          0x6 build/default/production/system_config/timer_1ms.o
  __c30_signature
-                  0x00024d          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libc-elf.a(memset.eo)
+                  0x0007a7          0x6 build/default/production/app_device_keyboard.o
+ __c30_signature
+                  0x0007ad          0x6 build/default/production/app_led_usb_status.o
+ __c30_signature
+                  0x0007b3          0x6 build/default/production/main.o
+ __c30_signature
+                  0x0007b9          0x6 build/default/production/usb_descriptors.o
+ __c30_signature
+                  0x0007bf          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
+ __c30_signature
+                  0x0007c5          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
+ __c30_signature
+                  0x0007cb          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libc-elf.a(memset.eo)
 
-.nbss               0x0800         0x22
- .nbss              0x0800         0x1e build/default/production/app_device_keyboard.o
-                    0x0810                  _oldInputReport
-                    0x0818                  _keyboardIdleRate
-                    0x081a                  _LocalSOFCount
- .nbss              0x081e          0x2 build/default/production/main.o
-                    0x081e                  _SOFCounter
- .nbss              0x0820          0x2 build/default/production/app_led_usb_status.o
+_045847205558a276
+                    0x0800         0x20
+ _045847205558a276
+                    0x0800         0x20 build/default/production/microchip_usb/usb_device.o
+                    0x0800                  _BDT
+
+.nbss               0x0820         0x70
+ .nbss              0x0820         0x42 build/default/production/microchip_usb/usb_device.o
+                    0x0820                  _USBDeviceState
+                    0x0822                  _USBActiveConfiguration
+                    0x0823                  _USBAlternateInterface
+                    0x0824                  _pBDTEntryEP0OutCurrent
+                    0x0826                  _pBDTEntryEP0OutNext
+                    0x0828                  _pBDTEntryOut
+                    0x082c                  _pBDTEntryIn
+                    0x0830                  _shortPacketStatus
+                    0x0831                  _controlTransferState
+                    0x0832                  _inPipes
+                    0x0838                  _outPipes
+                    0x0840                  _pDst
+                    0x0842                  _RemoteWakeup
+                    0x0843                  _USBBusIsSuspended
+                    0x0844                  _USTATcopy
+                    0x0845                  _endpoint_number
+                    0x0846                  _BothEP0OutUOWNsSet
+                    0x0847                  _ep_data_in
+                    0x0849                  _ep_data_out
+                    0x084b                  _USBStatusStageTimeoutCounter
+                    0x084c                  _USBDeferStatusStagePacket
+                    0x084d                  _USBStatusStageEnabledFlag1
+                    0x084e                  _USBStatusStageEnabledFlag2
+                    0x084f                  _USBDeferINDataStagePackets
+                    0x0850                  _USBDeferOUTDataStagePackets
+                    0x0851                  _SetupPkt
+                    0x0859                  _CtrlTrfData
+ .nbss              0x0862         0x1e build/default/production/app_device_keyboard.o
+                    0x0872                  _oldInputReport
+                    0x087a                  _keyboardIdleRate
+                    0x087c                  _LocalSOFCount
+ .nbss              0x0880          0xa build/default/production/system_config/timer_1ms.o
+                    0x0880                  _requests
+ .nbss              0x088a          0x2 build/default/production/microchip_usb/usb_device_hid.o
+ .nbss              0x088c          0x2 build/default/production/app_led_usb_status.o
+ .nbss              0x088e          0x2 build/default/production/main.o
+                    0x088e                  _SOFCounter
+
+.config_JTAGEN    0x00abfe          0x2
+ .config_JTAGEN
+                  0x00abfe          0x2 build/default/production/system_config/system.o
+
+.config_IESO      0x00abfc          0x2
+ .config_IESO     0x00abfc          0x2 build/default/production/system_config/system.o
+
+.config_WPEND     0x00abfa          0x2
+ .config_WPEND    0x00abfa          0x2 build/default/production/system_config/system.o
+
+.config_DSWDTEN
+                  0x00abf8          0x2
+ .config_DSWDTEN
+                  0x00abf8          0x2 build/default/production/system_config/system.o
 
 .const              0x82b0         0xd8 load address 0x0002b0  
  .const             0x82b0         0x98 build/default/production/usb_descriptors.o
@@ -1430,18 +1679,48 @@ __c30_signature
  .const             0x8348         0x40 build/default/production/app_device_keyboard.o
                     0x8348                  _hid_rpt01
 
-.text             0x000388        0x32c
- .text            0x000388        0x21a build/default/production/app_device_keyboard.o
-                  0x000388                  _APP_KeyboardInit
-                  0x0003c8                  _APP_KeyboardTasks
-                  0x000510                  build/default/production/app_device_keyboard.o:_USBHIDCBSetReportComplete
-                  0x000522                  _USBHIDCBSetReportHandler
-                  0x00058c                  _USBHIDCBSetIdleRateHandler
- .text            0x0005a2         0x9a build/default/production/main.o
-                  0x0005a2                  _main
-                  0x0005c8                  _USER_USB_CALLBACK_EVENT_HANDLER
- .text            0x00063c         0x78 build/default/production/app_led_usb_status.o
-                  0x00063c                  _APP_LEDUpdateUSBStatus
+.text             0x000388       0x18ee
+ .text            0x000388       0x1136 build/default/production/microchip_usb/usb_device.o
+                  0x000388                  _USBDeviceInit
+                  0x0004ba                  _USBDeviceTasks
+                  0x000654                  _USBEnableEndpoint
+                  0x00068e                  _USBTransferOnePacket
+                  0x000736                  _USBStallEndpoint
+                  0x0007d4                  _USBCancelIO
+                  0x00089c                  _USBDeviceDetach
+                  0x0008ae                  _USBDeviceAttach
+                  0x0008e6                  _USBCtrlEPAllowStatusStage
+                  0x00097a                  _USBCtrlEPAllowDataStage
+ .text            0x0014be        0x21a build/default/production/app_device_keyboard.o
+                  0x0014be                  _APP_KeyboardInit
+                  0x0014fe                  _APP_KeyboardTasks
+                  0x001646                  build/default/production/app_device_keyboard.o:_USBHIDCBSetReportComplete
+                  0x001658                  _USBHIDCBSetReportHandler
+                  0x0016c2                  _USBHIDCBSetIdleRateHandler
+ .text            0x0016d8        0x1b6 build/default/production/system_config/timer_1ms.o
+                  0x0016d8                  _TIMER_CancelTick
+                  0x001712                  _TIMER_RequestTick
+                  0x001778                  _TIMER_SetConfiguration
+                  0x0017e6                  __T3Interrupt
+ .text            0x00188e        0x114 build/default/production/microchip_usb/usb_device_hid.o
+                  0x00188e                  _USBCheckHIDRequest
+ .text            0x0019a2         0xfc build/default/production/system_config/leds.o
+                  0x0019a2                  _LED_On
+                  0x0019c4                  _LED_Off
+                  0x0019e6                  _LED_Toggle
+                  0x001a38                  _LED_Get
+                  0x001a7c                  _LED_Enable
+ .text            0x001a9e         0x9a build/default/production/main.o
+                  0x001a9e                  _main
+                  0x001ac4                  _USER_USB_CALLBACK_EVENT_HANDLER
+ .text            0x001b38         0x78 build/default/production/app_led_usb_status.o
+                  0x001b38                  _APP_LEDUpdateUSBStatus
+ .text            0x001bb0         0x64 build/default/production/system_config/system.o
+                  0x001bb0                  _SYSTEM_Initialize
+                  0x001bf0                  __USB1Interrupt
+ .text            0x001c14         0x62 build/default/production/system_config/buttons.o
+                  0x001c14                  _BUTTON_IsPressed
+                  0x001c54                  _BUTTON_Enable
 
-.dinit            0x0006b4         0x14
- .dinit           0x0006b4         0x14 data_init
+.dinit            0x001c76         0x2c
+ .dinit           0x001c76         0x2c data_init

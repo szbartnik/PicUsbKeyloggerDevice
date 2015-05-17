@@ -50,8 +50,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 #include <stdint.h>
 
-#include <usb/usb.h>
-#include <usb/usb_device_hid.h>
+#include "microchip_usb/usb.h"
+#include "microchip_usb/usb_device_hid.h"
 
 
 // *****************************************************************************

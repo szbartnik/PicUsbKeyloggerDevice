@@ -52,10 +52,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 /* Microchip library includes */
 #include <system.h>
-#include <system_config.h>
+#include "system_config.h"
 
-#include <usb/usb.h>
-#include <usb/usb_device_hid.h>
+#include "microchip_usb/usb.h"
+#include "microchip_usb/usb_device_hid.h"
 
 /* Demo project includes */
 #include "app_led_usb_status.h"

@@ -33,7 +33,7 @@
 #include <io_mapping.h>
 #include <power.h>
 
-#include <usb_config.h>
+#include <../usb_config.h>
 
 #define MAIN_RETURN int
 

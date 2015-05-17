@@ -49,7 +49,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 #include <stdint.h>
 #include <system.h>
-#include <usb/usb_device.h>
+#include "microchip_usb/usb_device.h"
 
 
 // *****************************************************************************
