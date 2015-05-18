@@ -78,7 +78,7 @@ Data Memory  [Origin = 0x800, Length = 0x2000]
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
-_045847205558a276            0x800                   0            0x20  (32)
+_046A5720555935b2            0x800                   0            0x20  (32)
 .nbss                        0x820                   0            0x70  (112)
 
                         Total data memory used (bytes):           0x90  (144) 1%
@@ -1606,9 +1606,9 @@ __c30_signature
  __c30_signature
                   0x0007cb          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libc-elf.a(memset.eo)
 
-_045847205558a276
+_046A5720555935b2
                     0x0800         0x20
- _045847205558a276
+ _046A5720555935b2
                     0x0800         0x20 build/default/production/microchip_usb/usb_device.o
                     0x0800                  _BDT
 

@@ -62,8 +62,8 @@
 #pragma config ICS = PGx1               // Emulator Pin Placement Select bits (Emulator functions are shared with PGEC1/PGED1)
 #pragma config GWRP = OFF               // General Segment Write Protect (Writes to program memory are allowed)
 #pragma config GCP = OFF                // General Segment Code Protect (Code protection is disabled)
-#pragma config JTAGEN = OFF             // JTAG Port Enable (JTAG port is disabled)
- 
+#pragma config JTAGEN = OFF             // JTAG Port Enable (JTAG port is disabled) 
+
 /*********************************************************************
 * Function: void SYSTEM_Initialize( SYSTEM_STATE state )
 *

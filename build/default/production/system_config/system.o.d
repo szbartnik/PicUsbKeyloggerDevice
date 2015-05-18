@@ -16,4 +16,4 @@ microchip_usb/../usb_config.h  \
  system_config/../microchip_usb/usb_device.h  \
 microchip_usb/usb_common.h  \
  system_config/../microchip_usb/usb_hal.h  \
-microchip_usb/usb_hal_pic24f.h 
+ system_config/../microchip_usb/usb_hal_pic24f.h 
