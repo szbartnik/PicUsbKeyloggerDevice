@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=microchip_usb/usb_device.c microchip_usb/usb_device_hid.c system_config/buttons.c system_config/leds.c system_config/system.c system_config/timer_1ms.c app_device_keyboard.c app_led_usb_status.c main.c usb_descriptors.c
+SOURCEFILES_QUOTED_IF_SPACED=microchip_usb/usb_device.c microchip_usb/usb_device_hid.c system_config/buttons.c system_config/leds.c system_config/system.c system_config/timer_1ms.c app_device_keyboard.c app_led_usb_status.c main.c usb_descriptors.c uart1.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/microchip_usb/usb_device.o ${OBJECTDIR}/microchip_usb/usb_device_hid.o ${OBJECTDIR}/system_config/buttons.o ${OBJECTDIR}/system_config/leds.o ${OBJECTDIR}/system_config/system.o ${OBJECTDIR}/system_config/timer_1ms.o ${OBJECTDIR}/app_device_keyboard.o ${OBJECTDIR}/app_led_usb_status.o ${OBJECTDIR}/main.o ${OBJECTDIR}/usb_descriptors.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/microchip_usb/usb_device.o.d ${OBJECTDIR}/microchip_usb/usb_device_hid.o.d ${OBJECTDIR}/system_config/buttons.o.d ${OBJECTDIR}/system_config/leds.o.d ${OBJECTDIR}/system_config/system.o.d ${OBJECTDIR}/system_config/timer_1ms.o.d ${OBJECTDIR}/app_device_keyboard.o.d ${OBJECTDIR}/app_led_usb_status.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/usb_descriptors.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/microchip_usb/usb_device.o ${OBJECTDIR}/microchip_usb/usb_device_hid.o ${OBJECTDIR}/system_config/buttons.o ${OBJECTDIR}/system_config/leds.o ${OBJECTDIR}/system_config/system.o ${OBJECTDIR}/system_config/timer_1ms.o ${OBJECTDIR}/app_device_keyboard.o ${OBJECTDIR}/app_led_usb_status.o ${OBJECTDIR}/main.o ${OBJECTDIR}/usb_descriptors.o ${OBJECTDIR}/uart1.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/microchip_usb/usb_device.o.d ${OBJECTDIR}/microchip_usb/usb_device_hid.o.d ${OBJECTDIR}/system_config/buttons.o.d ${OBJECTDIR}/system_config/leds.o.d ${OBJECTDIR}/system_config/system.o.d ${OBJECTDIR}/system_config/timer_1ms.o.d ${OBJECTDIR}/app_device_keyboard.o.d ${OBJECTDIR}/app_led_usb_status.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/usb_descriptors.o.d ${OBJECTDIR}/uart1.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/microchip_usb/usb_device.o ${OBJECTDIR}/microchip_usb/usb_device_hid.o ${OBJECTDIR}/system_config/buttons.o ${OBJECTDIR}/system_config/leds.o ${OBJECTDIR}/system_config/system.o ${OBJECTDIR}/system_config/timer_1ms.o ${OBJECTDIR}/app_device_keyboard.o ${OBJECTDIR}/app_led_usb_status.o ${OBJECTDIR}/main.o ${OBJECTDIR}/usb_descriptors.o
+OBJECTFILES=${OBJECTDIR}/microchip_usb/usb_device.o ${OBJECTDIR}/microchip_usb/usb_device_hid.o ${OBJECTDIR}/system_config/buttons.o ${OBJECTDIR}/system_config/leds.o ${OBJECTDIR}/system_config/system.o ${OBJECTDIR}/system_config/timer_1ms.o ${OBJECTDIR}/app_device_keyboard.o ${OBJECTDIR}/app_led_usb_status.o ${OBJECTDIR}/main.o ${OBJECTDIR}/usb_descriptors.o ${OBJECTDIR}/uart1.o
 
 # Source Files
-SOURCEFILES=microchip_usb/usb_device.c microchip_usb/usb_device_hid.c system_config/buttons.c system_config/leds.c system_config/system.c system_config/timer_1ms.c app_device_keyboard.c app_led_usb_status.c main.c usb_descriptors.c
+SOURCEFILES=microchip_usb/usb_device.c microchip_usb/usb_device_hid.c system_config/buttons.c system_config/leds.c system_config/system.c system_config/timer_1ms.c app_device_keyboard.c app_led_usb_status.c main.c usb_descriptors.c uart1.c
 
 
 CFLAGS=
@@ -152,6 +152,13 @@ ${OBJECTDIR}/usb_descriptors.o: usb_descriptors.c  nbproject/Makefile-${CND_CONF
 	${MP_CC} $(MP_EXTRA_CC_PRE)  usb_descriptors.c  -o ${OBJECTDIR}/usb_descriptors.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/usb_descriptors.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -I"microchip_usb" -I"system_config" -O0 -I"microchip_usb" -I"system_config" -msmart-io=1 -Wall -msfr-warn=off
 	@${FIXDEPS} "${OBJECTDIR}/usb_descriptors.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+${OBJECTDIR}/uart1.o: uart1.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/uart1.o.d 
+	@${RM} ${OBJECTDIR}/uart1.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  uart1.c  -o ${OBJECTDIR}/uart1.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/uart1.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -I"microchip_usb" -I"system_config" -O0 -I"microchip_usb" -I"system_config" -msmart-io=1 -Wall -msfr-warn=off
+	@${FIXDEPS} "${OBJECTDIR}/uart1.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 else
 ${OBJECTDIR}/microchip_usb/usb_device.o: microchip_usb/usb_device.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/microchip_usb" 
@@ -222,6 +229,13 @@ ${OBJECTDIR}/usb_descriptors.o: usb_descriptors.c  nbproject/Makefile-${CND_CONF
 	@${RM} ${OBJECTDIR}/usb_descriptors.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  usb_descriptors.c  -o ${OBJECTDIR}/usb_descriptors.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/usb_descriptors.o.d"        -g -omf=elf -I"microchip_usb" -I"system_config" -O0 -I"microchip_usb" -I"system_config" -msmart-io=1 -Wall -msfr-warn=off
 	@${FIXDEPS} "${OBJECTDIR}/usb_descriptors.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/uart1.o: uart1.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/uart1.o.d 
+	@${RM} ${OBJECTDIR}/uart1.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  uart1.c  -o ${OBJECTDIR}/uart1.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/uart1.o.d"        -g -omf=elf -I"microchip_usb" -I"system_config" -O0 -I"microchip_usb" -I"system_config" -msmart-io=1 -Wall -msfr-warn=off
+	@${FIXDEPS} "${OBJECTDIR}/uart1.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 

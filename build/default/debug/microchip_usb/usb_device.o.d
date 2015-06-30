@@ -1,5 +1,5 @@
-build/default/production/main.o:  \
-main.c  \
+build/default/debug/microchip_usb/usb_device.o:  \
+ microchip_usb/usb_device.c  \
 system_config/system.h  \
  system_config/buttons.h  \
 system_config/leds.h  \
@@ -7,20 +7,14 @@ system_config/io_mapping.h  \
  system_config/power.h  \
 microchip_usb/../usb_config.h  \
  microchip_usb/../microchip_usb/usb_ch9.h  \
-uart1.h  \
-system_config.h  \
- usb_config.h  \
-microchip_usb/usb.h  \
-microchip_usb/../system_config/system.h  \
  microchip_usb/../system_config.h  \
 microchip_usb/../usb_config.h  \
+ microchip_usb/usb.h  \
+microchip_usb/../system_config/system.h  \
  microchip_usb/usb_common.h  \
 microchip_usb/usb_ch9.h  \
  microchip_usb/usb_device.h  \
 microchip_usb/usb_common.h  \
  microchip_usb/usb_hal.h  \
 microchip_usb/usb_hal_pic24f.h  \
- microchip_usb/usb_device_hid.h  \
-microchip_usb/usb_ch9.h  \
- app_led_usb_status.h  \
-app_device_keyboard.h 
+ microchip_usb/usb_device_local.h 

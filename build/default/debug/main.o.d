@@ -1,4 +1,4 @@
-build/default/production/main.o:  \
+build/default/debug/main.o:  \
 main.c  \
 system_config/system.h  \
  system_config/buttons.h  \
@@ -7,10 +7,9 @@ system_config/io_mapping.h  \
  system_config/power.h  \
 microchip_usb/../usb_config.h  \
  microchip_usb/../microchip_usb/usb_ch9.h  \
-uart1.h  \
 system_config.h  \
- usb_config.h  \
-microchip_usb/usb.h  \
+usb_config.h  \
+ microchip_usb/usb.h  \
 microchip_usb/../system_config/system.h  \
  microchip_usb/../system_config.h  \
 microchip_usb/../usb_config.h  \
