@@ -37,6 +37,24 @@
 
 #define MAIN_RETURN int
 
+// Definition for system clock
+#define SYS_CLK_FrequencySystemGet()        8000000
+// Definition for peripheral clock
+#define SYS_CLK_FrequencyPeripheralGet()    SYS_CLK_FrequencySystemGet()
+// Definition for instruction clock
+#define SYS_CLK_FrequencyInstructionGet()   (SYS_CLK_FrequencySystemGet() / 2)
+
+// Description: A delay prescaler
+#define FILEIO_SD_DELAY_PRESCALER       (uint8_t)8
+
+// Description: An approximation of the number of cycles per delay loop of overhead
+#define FILEIO_SD_DELAY_OVERHEAD        (uint8_t)5
+
+// Description: An approximate calculation of how many times to loop to delay 1 ms in the Delayms function
+#define FILEIO_SD_MILLISECOND_DELAY     (uint16_t)((SYS_CLK_FrequencyInstructionGet()/FILEIO_SD_DELAY_PRESCALER/(uint16_t)1000) - FILEIO_SD_DELAY_OVERHEAD)
+
+void Delayms(uint8_t milliseconds);
+
 /*** System States **************************************************/
 typedef enum
 {

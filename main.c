@@ -1,57 +1,7 @@
-/*******************************************************************************
-  Main Demo File
-
-  Company:
-    Microchip Technology Inc.
-
-  File Name:
-    main.c
-
-  Summary:
-    Main demo file for keyboard project.  Entry point for compiler.
-
-  Description:
-    Main demo file for keyboard project.  Entry point for compiler.  Also
-    calls the system initailization and handles system issues like calling the
-    demo code appropriately and handing device level events from the USB stack.
-*******************************************************************************/
-
-// DOM-IGNORE-BEGIN
-/*******************************************************************************
-Copyright (c) 2013 released Microchip Technology Inc.  All rights reserved.
-
-Microchip licenses to you the right to use, modify, copy and distribute
-Software only when embedded on a Microchip microcontroller or digital signal
-controller that is integrated into your product or third party product
-(pursuant to the sublicense terms in the accompanying license agreement).
-
-You should refer to the license agreement accompanying this Software for
-additional information regarding your rights and obligations.
-
-SOFTWARE AND DOCUMENTATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
-EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF
-MERCHANTABILITY, TITLE, NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
-IN NO EVENT SHALL MICROCHIP OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER
-CONTRACT, NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION, BREACH OF WARRANTY, OR
-OTHER LEGAL EQUITABLE THEORY ANY DIRECT OR INDIRECT DAMAGES OR EXPENSES
-INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
-CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
-SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
-(INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
-// DOM-IGNORE-END
-
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Included Files
-// *****************************************************************************
-// *****************************************************************************
-/* Standard C includes */
 #include <stdint.h>
-
-/* Microchip library includes */
 #include <system.h>
+#include "timer.h"
+#include "uart1.h"
 #include "system_config.h"
 
 #include "microchip_usb/usb.h"
@@ -91,6 +41,21 @@ int main(void)
     USBDeviceInit();
     USBDeviceAttach();
 
+    // #########################################
+    // # UART CONFIGURATION 
+    // #########################################
+    //OSCCON = 0x2200;	 //Use primary, no divide FCY = 10Mhz/2 = 5Mhz
+    //CLKDIV	=	0x0000;	 //do not divide
+    
+    //Set up I/O Port
+    RPINR18bits.U1RXR = 6; // UART1 RX RP6
+    RPOR2bits.RP5R    =	3; // UART1 TX RP5 (function 3)
+
+    // FCY = 8MHz * 4 / 2 = 16MHz
+    // BRGx = 16*10^6/(16*19200)-1 = 51
+    UART1Init(51);	 //Initiate UART1 to 19200 at 8MHz OSC + PLL
+    Delayms(1000);
+    
     while(1)
     {
         SYSTEM_Tasks();

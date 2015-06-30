@@ -107,6 +107,21 @@ void SYSTEM_Initialize( SYSTEM_STATE state )
     }
 }
 
+void Delayms(uint8_t milliseconds)
+{
+    uint8_t    ms;
+    uint32_t   count;
+    
+    ms = milliseconds;
+    while (ms--)
+    {
+        count = FILEIO_SD_MILLISECOND_DELAY;
+        while (count--);
+    }
+    Nop();
+    return;
+}
+
 #if defined(USB_INTERRUPT)
 void __attribute__((interrupt,auto_psv)) _USB1Interrupt()
 {
