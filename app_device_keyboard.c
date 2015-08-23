@@ -51,6 +51,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "microchip_usb/usb_device_hid.h"
 
 #include "app_led_usb_status.h"
+#include "uart1.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -357,27 +358,33 @@ void APP_KeyboardTasks(void)
         /* Clear the INPUT report buffer.  Set to all zeros. */
         memset(&inputReport, 0, sizeof(inputReport));
 
-        if(BUTTON_IsPressed(BUTTON_USB_DEVICE_HID_KEYBOARD_KEY) == true)
+        char uartData;
+        if(Uart1GetCharCheck(&uartData))
         {
-            if(keyboard.waitingForRelease == false)
-            {
-                keyboard.waitingForRelease = true;
-
-                /* Set the only important data, the key press data. */
-                inputReport.keys[0] = keyboard.key++;
-
-                //In this simulated keyboard, if the last key pressed exceeds the a-z + 0-9,
-                //then wrap back around so we send 'a' again.
-                if(keyboard.key == 40)
-                {
-                    keyboard.key = 4;
-                }
-            }
+            inputReport.keys[0] = uartData;
         }
-        else
-        {
-            keyboard.waitingForRelease = false;
-        }
+        
+//        if(BUTTON_IsPressed(BUTTON_USB_DEVICE_HID_KEYBOARD_KEY) == true)
+//        {
+//            if(keyboard.waitingForRelease == false)
+//            {
+//                keyboard.waitingForRelease = true;
+//
+//                /* Set the only important data, the key press data. */
+//                inputReport.keys[0] = keyboard.key++;
+//
+//                //In this simulated keyboard, if the last key pressed exceeds the a-z + 0-9,
+//                //then wrap back around so we send 'a' again.
+//                if(keyboard.key == 40)
+//                {
+//                    keyboard.key = 4;
+//                }
+//            }
+//        }
+//        else
+//        {
+//            keyboard.waitingForRelease = false;
+//        }
 
         //Check to see if the new packet contents are somehow different from the most
         //recently sent packet contents.

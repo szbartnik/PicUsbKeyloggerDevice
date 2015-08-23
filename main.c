@@ -47,14 +47,21 @@ int main(void)
     //OSCCON = 0x2200;	 //Use primary, no divide FCY = 10Mhz/2 = 5Mhz
     //CLKDIV	=	0x0000;	 //do not divide
     
+    AD1PCFGL = 0xFFFF;
     //Set up I/O Port
+    TRISAbits.TRISA0 = 0;
+    TRISAbits.TRISA1 = 1;
+
     RPINR18bits.U1RXR = 6; // UART1 RX RP6
     RPOR2bits.RP5R    =	3; // UART1 TX RP5 (function 3)
 
     // FCY = 8MHz * 4 / 2 = 16MHz
     // BRGx = 16*10^6/(16*19200)-1 = 51
     UART1Init(51);	 //Initiate UART1 to 19200 at 8MHz OSC + PLL
-    Delayms(1000);
+    Delayms(250);
+    Delayms(250);
+    Delayms(250);
+    Delayms(250);
     
     while(1)
     {

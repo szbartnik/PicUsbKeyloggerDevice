@@ -33,3 +33,15 @@ char UART1GetChar()
    //return my received byte
    return Temp;
 }
+
+// Customized for my usage receive function, returns if data available
+bool Uart1GetCharCheck(char* data)
+{
+    if(IFS0bits.U1RXIF == 0)
+        return false;
+    
+    *data = U1RXREG;
+    IFS0bits.U1RXIF = 0;
+    
+    return true;
+}

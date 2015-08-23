@@ -12,5 +12,8 @@ extern void  UART1PutChar(char Ch);
 //UART receive function
 extern char UART1GetChar();
 
+// Customized for my usage receive function, returns if data available
+bool Uart1GetCharCheck(char* data);
+
 #endif	/* UART1_H */
 
