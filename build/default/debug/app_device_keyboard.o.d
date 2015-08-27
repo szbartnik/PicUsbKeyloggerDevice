@@ -19,4 +19,5 @@ microchip_usb/usb_common.h  \
 microchip_usb/usb_hal_pic24f.h  \
  microchip_usb/usb_device_hid.h  \
 microchip_usb/usb_ch9.h  \
- app_led_usb_status.h 
+ app_led_usb_status.h  \
+uart1.h 

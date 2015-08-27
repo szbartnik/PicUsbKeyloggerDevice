@@ -36,6 +36,9 @@ volatile signed int SOFCounter = 0;
 
 int main(void)
 {
+    Delayms(250);
+    Delayms(250);
+    
     SYSTEM_Initialize( SYSTEM_STATE_USB_START );
 
     USBDeviceInit();

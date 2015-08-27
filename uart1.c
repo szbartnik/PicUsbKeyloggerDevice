@@ -9,8 +9,13 @@ void UART1Init(int BAUDRATEREG1)
    U1BRG = BAUDRATEREG1;	//set baud speed
    U1MODE	=	0x8000;	 //turn on module
    U1STA	=	0x8400;	 //set interrupts
+   
    //reset RX interrupt flag
    IFS0bits.U1RXIF = 0;
+   // set to highest priority
+   IPC2bits.U1RXIP = 7;
+   //enable receive interrupts
+   IEC0bits.U1RXIE = 1;
 }
 
 //UART transmit function, parameter Ch is the character to send

@@ -53,6 +53,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "app_led_usb_status.h"
 #include "uart1.h"
 
+typedef unsigned char    HID_USER_DATA_SIZE;
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: File Scope or Global Constants
@@ -192,6 +194,18 @@ typedef struct __attribute__((packed))
     uint8_t keys[6];
 } KEYBOARD_INPUT_REPORT;
 
+typedef enum 
+{
+    USB_HID_KEYBOARD_KEYPAD_KEYBOARD_LEFT_CONTROL                            = 0xE0,
+    USB_HID_KEYBOARD_KEYPAD_KEYBOARD_LEFT_SHIFT                              = 0xE1,
+    USB_HID_KEYBOARD_KEYPAD_KEYBOARD_LEFT_ALT                                = 0xE2,
+    USB_HID_KEYBOARD_KEYPAD_KEYBOARD_LEFT_GUI                                = 0xE3,
+    USB_HID_KEYBOARD_KEYPAD_KEYBOARD_RIGHT_CONTROL                           = 0xE4,
+    USB_HID_KEYBOARD_KEYPAD_KEYBOARD_RIGHT_SHIFT                             = 0xE5,
+    USB_HID_KEYBOARD_KEYPAD_KEYBOARD_RIGHT_ALT                               = 0xE6,
+    USB_HID_KEYBOARD_KEYPAD_KEYBOARD_RIGHT_GUI                               = 0xE7
+} USB_HID_KEYBOARD_KEYPAD;
+
 
 /* This typedef defines the only OUTPUT report found in the HID report
  * descriptor and gives an easy way to parse the OUTPUT report. */
@@ -236,6 +250,33 @@ typedef union __attribute__((packed))
     } leds;
 } KEYBOARD_OUTPUT_REPORT;
 
+typedef struct
+{
+    union
+    {
+        HID_USER_DATA_SIZE value[7];
+        struct 
+        {
+            HID_USER_DATA_SIZE keys[6];
+            union __attribute__((packed))
+            {
+                uint8_t value;
+                struct __attribute__((packed))
+                {
+                    unsigned leftControl    :1;
+                    unsigned leftShift      :1;
+                    unsigned leftAlt        :1;
+                    unsigned leftGUI        :1;
+                    unsigned rightControl   :1;
+                    unsigned rightShift     :1;
+                    unsigned rightAlt       :1;
+                    unsigned rightGUI       :1;
+                } bits;
+            } modifiers;
+        } data;
+    };
+    
+} MYKEYDATA;
 
 /* This creates a storage type for all of the information required to track the
  * current state of the keyboard. */
@@ -253,6 +294,9 @@ typedef struct
 // *****************************************************************************
 // *****************************************************************************
 static KEYBOARD keyboard;
+static MYKEYDATA myKeyData;
+int numOfByte = 0;
+bool isFrameCompleted = false;
 
 #if !defined(KEYBOARD_INPUT_REPORT_DATA_BUFFER_ADDRESS_TAG)
     #define KEYBOARD_INPUT_REPORT_DATA_BUFFER_ADDRESS_TAG
@@ -273,7 +317,7 @@ static volatile KEYBOARD_OUTPUT_REPORT outputReport KEYBOARD_OUTPUT_REPORT_DATA_
 static void APP_KeyboardProcessOutputReport(void);
 
 
-//Exteranl variables declared in other .c files
+//External variables declared in other .c files
 extern volatile signed int SOFCounter;
 
 
@@ -283,7 +327,24 @@ signed int keyboardIdleRate;
 signed int LocalSOFCount;
 static signed int OldSOFCount;
 
-
+void __attribute__((interrupt, no_auto_psv, shadow)) _U1RXInterrupt(void)
+{
+    if(isFrameCompleted == false)
+    {
+        if (U1STAbits.OERR == 1) 
+            U1STAbits.OERR = 0;
+        else 
+        {
+            myKeyData.value[numOfByte++] = U1RXREG;
+            if(numOfByte >= sizeof(MYKEYDATA))
+            {
+                numOfByte = 0;
+                isFrameCompleted = true;
+            }
+        }
+    }
+    IFS0bits.U1RXIF = 0;
+}
 
 
 // *****************************************************************************
@@ -358,11 +419,18 @@ void APP_KeyboardTasks(void)
         /* Clear the INPUT report buffer.  Set to all zeros. */
         memset(&inputReport, 0, sizeof(inputReport));
 
-        char uartData;
-        if(Uart1GetCharCheck(&uartData))
+        if(isFrameCompleted == true)
         {
-            inputReport.keys[0] = uartData;
+            memcpy(&(inputReport.keys), &(myKeyData.data.keys), sizeof(myKeyData.data.keys));
+            inputReport.modifiers.value = myKeyData.data.modifiers.value;
+            isFrameCompleted = false;
         }
+        
+//        char uartData;
+//        if(Uart1GetCharCheck(&uartData))
+//        {
+//            inputReport.keys[0] = uartData;
+//        }
         
 //        if(BUTTON_IsPressed(BUTTON_USB_DEVICE_HID_KEYBOARD_KEY) == true)
 //        {
