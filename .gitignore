@@ -1,3 +1,4 @@
 dist/
-nbproject/
+build/
+debug/
 Makefile

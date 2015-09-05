@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=Keylogger-device.X
+PROJECTNAME=Keylogger-device
 
 # Active Configuration
 DEFAULTCONF=default
