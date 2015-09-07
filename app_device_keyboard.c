@@ -254,10 +254,10 @@ typedef struct
 {
     union
     {
-        HID_USER_DATA_SIZE value[7];
+        HID_USER_DATA_SIZE value[2];
         struct 
         {
-            HID_USER_DATA_SIZE keys[6];
+            HID_USER_DATA_SIZE keys[1];
             union __attribute__((packed))
             {
                 uint8_t value;
@@ -285,7 +285,6 @@ typedef struct
     USB_HANDLE lastINTransmission;
     USB_HANDLE lastOUTTransmission;
     unsigned char key;
-    bool waitingForRelease;
 } KEYBOARD;
 
 // *****************************************************************************
@@ -359,7 +358,6 @@ void APP_KeyboardInit(void)
     keyboard.lastINTransmission = 0;
     
     keyboard.key = 4;
-    keyboard.waitingForRelease = false;
 
     //Set the default idle rate to 500ms (until the host sends a SET_IDLE request to change it to a new value)
     keyboardIdleRate = 500;
@@ -378,6 +376,8 @@ void APP_KeyboardInit(void)
     //Arm OUT endpoint so we can receive caps lock, num lock, etc. info from host
     keyboard.lastOUTTransmission = HIDRxPacket(HID_EP,(uint8_t*)&outputReport, sizeof(outputReport) );
 }
+
+char toSend = 0;
 
 void APP_KeyboardTasks(void)
 {
@@ -411,49 +411,22 @@ void APP_KeyboardTasks(void)
         OldSOFCount = LocalSOFCount - 5000;
     }
 
-
     /* Check if the IN endpoint is busy, and if it isn't check if we want to send
      * keystroke data to the host. */
     if(HIDTxHandleBusy(keyboard.lastINTransmission) == false)
     {
         /* Clear the INPUT report buffer.  Set to all zeros. */
         memset(&inputReport, 0, sizeof(inputReport));
-
+ 
         if(isFrameCompleted == true)
         {
-            memcpy(&(inputReport.keys), &(myKeyData.data.keys), sizeof(myKeyData.data.keys));
-            inputReport.modifiers.value = myKeyData.data.modifiers.value;
+            inputReport.modifiers.value = myKeyData.data.modifiers.value;   
+            toSend = myKeyData.data.keys[0];
             isFrameCompleted = false;
         }
         
-//        char uartData;
-//        if(Uart1GetCharCheck(&uartData))
-//        {
-//            inputReport.keys[0] = uartData;
-//        }
+        inputReport.keys[0] = toSend;
         
-//        if(BUTTON_IsPressed(BUTTON_USB_DEVICE_HID_KEYBOARD_KEY) == true)
-//        {
-//            if(keyboard.waitingForRelease == false)
-//            {
-//                keyboard.waitingForRelease = true;
-//
-//                /* Set the only important data, the key press data. */
-//                inputReport.keys[0] = keyboard.key++;
-//
-//                //In this simulated keyboard, if the last key pressed exceeds the a-z + 0-9,
-//                //then wrap back around so we send 'a' again.
-//                if(keyboard.key == 40)
-//                {
-//                    keyboard.key = 4;
-//                }
-//            }
-//        }
-//        else
-//        {
-//            keyboard.waitingForRelease = false;
-//        }
-
         //Check to see if the new packet contents are somehow different from the most
         //recently sent packet contents.
         needToSendNewReportPacket = false;
