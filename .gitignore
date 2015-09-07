@@ -1,3 +1,4 @@
 dist/
-nbproject/
-Makefile
+build/
+debug/
+map.map
